@@ -1,0 +1,195 @@
+	private String title;
+	private String chapterString;
+//	private String question;
+	
+	private KloudButton button1;
+	private KloudButton button2;
+	private KloudButton button3;
+	private KloudButton button4;
+	
+	private MultipleChoiceQuestion question;
+	
+	private JButton backButton;
+	
+	private KloudButton correctAnswer;
+	
+	private JTextField questField;
+	
+	private JPanel content;
+	private JPanel panel;
+	private JPanel panel2;
+	protected KloudPanel finalPanel;
+	
+	public MultiChoiceGui(String tit, MultipleChoiceQuestion question) {
+		this.title = tit;
+		this.setTitle(title);
+		this.setSize(600, 600);
+		this.setBackground(Color.CYAN);
+		backButton = new JButton("back");
+		this.setResizable(false);
+	}
+	
+	public MultiChoiceGui initialize() {
+		content = new JPanel();
+		panel = new JPanel();
+		panel2 = new JPanel();
+		content.setBackground(Color.CYAN);
+		panel.setBackground(Color.CYAN);
+		panel2.setBackground(Color.CYAN);
+		this.setContentPane(content);
+		content.setLayout(new BorderLayout());
+		content.add(panel, BorderLayout.NORTH);
+		content.add(panel2, BorderLayout.CENTER);
+		questField = new JTextField(question);
+		questField.setEditable(false);
+		panel.add(questField);
+		panel2.add(button1);
+		panel2.add(button2);
+		panel2.add(button3);
+		panel2.add(button4);
+		panel2.add(backButton);
+		backButton.addActionListener(this);
+		button1.addActionListener(this);
+		button2.addActionListener(this);
+		button3.addActionListener(this);
+		button4.addActionListener(this);
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setVisible(false);
+		return this;
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if(e.getSource() == backButton) {
+			StudyGuide.getGuide().getChapterHandler().getChapter(chapterString).getFrameInstance().setVisible(true);
+			this.setVisible(false);
+		}
+		
+		if(e.getSource() == this.correctAnswer) {
+			try {
+				
+				JFrame frame = new CorrectGui();
+				frame.setVisible(true);
+				this.setVisible(false);
+				Timer t = new Timer();
+				t.schedule(new TimerTask() {
+
+					@Override
+					public void run() {
+						frame.setVisible(false);
+					}
+				
+				}, 2000);
+				t.schedule(new TimerTask() {
+
+					@Override
+					public void run() {
+						StudyGuide.getGuide().getChapterHandler().getChapter(chapterString).getFrameInstance().setVisible(true);
+					}
+					
+				}, 2200);	
+			} catch(Exception exc) {
+				exc.printStackTrace();
+			}
+			
+		}
+	}
+	
+	public MultiChoiceGui setButton1(KloudButton button1) {
+		this.button1 = button1;
+		return this;
+	}
+
+	public MultiChoiceGui setButton2(KloudButton button2) {
+		this.button2 = button2;
+		return this;
+	}
+
+	public MultiChoiceGui setButton3(KloudButton button3) {
+		this.button3 = button3;
+		return this;
+	}
+
+	public MultiChoiceGui setbutton4(KloudButton button4) {
+		this.button4 = button4;
+		return this;
+	}
+
+	public MultiChoiceGui setCorrectAnswer(KloudButton correctAnswer) {
+		this.correctAnswer = correctAnswer;
+		return this;
+	}
+
+	public KloudButton getButton1() {
+		return button1;
+	}
+
+	public KloudButton getButton2() {
+		return button2;
+	}
+
+	public KloudButton getButton3() {
+		return button3;
+	}
+
+	public KloudButton getButton4() {
+		return button4;
+	}
+
+	public KloudButton getCorrectAnswer() {
+		return correctAnswer;
+	}
+
+	public String getQuestion() {
+		return question;
+	}
+
+	public MultiChoiceGui setQuestion(String question) {
+		this.question = question;
+		return this;
+	}
+
+	@Override
+	public String getChapterKey() {
+		return this.chapterString;
+	}
+	
+	/*
+		System.out.println("Creating Chapter 1 GUI");
+		contentPane = new JPanel();
+		contentPane.setBackground(Color.CYAN);
+		this.setContentPane(contentPane);
+		this.setSize(600, 800);
+		contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
+		button1.addActionListener(this);
+		button2.addActionListener(this);
+		button3.addActionListener(this);
+		button4.addActionListener(this);
+		button5.addActionListener(this);
+		backButton.addActionListener(this);
+		panel3 = new ImagePanelLoader("studyguide", 100, 50);
+		panel3.setBackground(Color.RED);
+		contentPane.add(panel3);
+		Box box2 = Box.createVerticalBox();
+		box2.setSize(new Dimension(600, 600));
+		contentPane.add(box2);
+		box2.setBackground(Color.CYAN);
+		box2.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+		box2.add(button1);
+		box2.add(Box.createRigidArea(new Dimension(10, 10)));
+		box2.add(button2);
+		box2.add(Box.createRigidArea(new Dimension(10, 10)));
+		box2.add(button3);
+		box2.add(Box.createRigidArea(new Dimension(10, 10)));
+		box2.add(button4);
+		box2.add(Box.createRigidArea(new Dimension(10, 10)));
+		box2.add(button5);
+		panel2 = new ImagePanelLoader("logo", 375, 300);
+		panel2.setBackground(Color.CYAN);
+		panel2.add(Box.createVerticalStrut(145));
+		contentPane.add(panel2);
+		panel2.add(backButton);
+		this.setVisible(false);
+		this.setResizable(false);
+		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+		*/
